@@ -18,6 +18,30 @@ reverseLinkedList([1, 2, 3, 4, 5].toListNode)?.toArray ?? []
 reverseLinkedList([1, 2].toListNode)?.toArray ?? []
 reverseLinkedList([].toListNode)?.toArray ?? []
 
+// MARK: - 203. Remove Linked List Elements [Easy]
+// https://leetcode.com/problems/remove-linked-list-elements/
+// Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+
+func removeLinkedListElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+  guard var head else { return nil }
+
+  var current = head
+  while let next = current.next {
+    // skip the next node if it has the value we want to remove
+    if next.val == val {
+      current.next = next.next
+    } else {
+      current = next
+    }
+  }
+  // check if first node has the value we want to remove
+  return head.val == val ? head.next : head
+}
+
+removeLinkedListElements([1, 2, 6, 3, 4, 5, 6].toListNode, 6)?.toArray ?? []
+removeLinkedListElements([].toListNode, 1)?.toArray ?? []
+removeLinkedListElements([7, 7, 7, 7].toListNode, 7)?.toArray ?? []
+
 // MARK: - 21. Merge Two Sorted Lists [Easy]
 // https://leetcode.com/problems/merge-two-sorted-lists/
 // Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.
