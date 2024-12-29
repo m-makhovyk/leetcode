@@ -42,6 +42,38 @@ removeLinkedListElements([1, 2, 6, 3, 4, 5, 6].toListNode, 6)?.toArray ?? []
 removeLinkedListElements([].toListNode, 1)?.toArray ?? []
 removeLinkedListElements([7, 7, 7, 7].toListNode, 7)?.toArray ?? []
 
+// MARK: - 83. Remove Duplicates from Sorted List [Easy]
+// https://leetcode.com/problems/remove-duplicates-from-sorted-list/
+// Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
+
+func removeDuplicatesFromSortedList(_ head: ListNode?) -> ListNode? {
+  guard var head else { return nil }
+
+  var storage: [Int: Int] = [:]
+  var current: ListNode? = head
+
+  // iterating thorugh the list to count the ocurrences of each value
+  while current != nil {
+    storage[current!.val, default: 0] += 1
+    current = current!.next
+  }
+
+  current = head
+  while current != nil {
+    if storage[current!.val, default: 0] > 1 {
+      current!.next = current!.next?.next
+      storage[current!.val, default: 1] -= 1
+    } else {
+      current = current!.next
+    }
+  }
+
+  return head
+}
+
+removeDuplicatesFromSortedList([1, 1, 2].toListNode)?.toArray ?? []
+removeDuplicatesFromSortedList([1, 1, 2, 3, 3].toListNode)?.toArray ?? []
+
 // MARK: - 21. Merge Two Sorted Lists [Easy]
 // https://leetcode.com/problems/merge-two-sorted-lists/
 // Merge two sorted linked lists and return it as a sorted list. The list should be made by splicing together the nodes of the first two lists.
