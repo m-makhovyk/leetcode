@@ -42,6 +42,38 @@ removeLinkedListElements([1, 2, 6, 3, 4, 5, 6].toListNode, 6)?.toArray ?? []
 removeLinkedListElements([].toListNode, 1)?.toArray ?? []
 removeLinkedListElements([7, 7, 7, 7].toListNode, 7)?.toArray ?? []
 
+// MARK: - 234. Palindrome Linked List [Easy]
+// https://leetcode.com/problems/palindrome-linked-list/
+// Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+func palindromeLinkedList(_ head: ListNode?) -> Bool {
+  guard let head else { return true }
+
+  // reversing the list to get the tail
+  var current: ListNode? = head
+  var tail: ListNode? = ListNode(head.val)
+
+  while let next = current?.next {
+    tail = ListNode(next.val, tail)
+    current = next
+  }
+
+  // comparing the original list with the reversed one, for palindrome they should be the same
+  current = head
+  while tail != nil {
+    if current!.val != tail!.val {
+      return false
+    }
+    current = current!.next
+    tail = tail!.next
+  }
+
+  return true
+}
+
+palindromeLinkedList([1, 2, 2, 1].toListNode)
+palindromeLinkedList([1, 2].toListNode)
+
 // MARK: - 83. Remove Duplicates from Sorted List [Easy]
 // https://leetcode.com/problems/remove-duplicates-from-sorted-list/
 // Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
