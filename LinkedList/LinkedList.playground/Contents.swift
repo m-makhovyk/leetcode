@@ -153,6 +153,46 @@ mergeTwoLists([1, 2, 4].toListNode, [1, 3, 4].toListNode)?.toArray ?? []
 mergeTwoLists([].toListNode, [].toListNode)?.toArray ?? []
 mergeTwoLists([].toListNode, [0].toListNode)?.toArray ?? []
 
+// MARK: - 19. Remove Nth Node From End of List [Medium]
+// https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+// Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+  // if there is only one element in the list, remove it
+  guard head?.next != nil else { return nil }
+
+  var count = 0
+
+  // iterating through the list to get the total number of elements
+  var current = head
+  while current != nil {
+    count += 1
+    current = current!.next
+  }
+
+  var targetIndex = count - n
+  // if target index is zero, skip first element
+  if targetIndex == 0 {
+    return head?.next
+  }
+
+  var index = 0
+  current = head
+  while current != nil {
+    index += 1
+    if index == targetIndex {
+      current!.next = current!.next?.next
+    } else {
+      current = current!.next
+    }
+  }
+
+  return head
+}
+
+removeNthFromEnd([1, 2, 3, 4, 5].toListNode, 2)?.toArray ?? []
+removeNthFromEnd([1].toListNode, 1)?.toArray ?? []
+removeNthFromEnd([1, 2].toListNode, 1)?.toArray ?? []
 
 // MARK: - 2. Add Two Numbers [Medium]
 // https://leetcode.com/problems/add-two-numbers/
