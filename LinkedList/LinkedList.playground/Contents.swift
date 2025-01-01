@@ -228,3 +228,29 @@ func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
 addTwoNumbers([2, 4, 3].toListNode, [5, 6, 4].toListNode)?.toArray ?? []
 addTwoNumbers([0].toListNode, [0].toListNode)?.toArray ?? []
 addTwoNumbers([9, 9, 9, 9, 9, 9, 9].toListNode, [9, 9, 9, 9].toListNode)?.toArray ?? []
+
+// MARK: - 24. Swap Nodes in Pairs [Medium]
+// https://leetcode.com/problems/swap-nodes-in-pairs/
+// Given a linked list, swap every two adjacent nodes and return its head.
+// You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+func swapPairs(_ head: ListNode?) -> ListNode? {
+  guard var current = head, current.next != nil else { return head }
+
+  while let next = current.next {
+    // swapping values without temp variable
+    current.val += next.val
+    next.val = current.val - next.val
+    current.val -= next.val
+
+    // hopping over the next node
+    current = next.next ?? next
+  }
+
+  return head
+}
+
+swapPairs([1, 2, 3, 4].toListNode)?.toArray ?? []
+swapPairs([1, 2, 3].toListNode)?.toArray ?? []
+swapPairs([1].toListNode)?.toArray ?? []
+swapPairs([].toListNode)?.toArray ?? []
