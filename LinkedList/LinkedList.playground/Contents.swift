@@ -196,6 +196,9 @@ removeNthFromEnd([1, 2].toListNode, 1)?.toArray ?? []
 
 // MARK: - 2. Add Two Numbers [Medium]
 // https://leetcode.com/problems/add-two-numbers/
+// You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
+// Add the two numbers and return the sum as a linked list.
+// You may assume the two numbers do not contain any leading zero, except the number 0 itself.
 
 func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
   guard var l1, var l2 else { return nil }
