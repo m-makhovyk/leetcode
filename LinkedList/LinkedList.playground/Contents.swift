@@ -194,6 +194,36 @@ removeNthFromEnd([1, 2, 3, 4, 5].toListNode, 2)?.toArray ?? []
 removeNthFromEnd([1].toListNode, 1)?.toArray ?? []
 removeNthFromEnd([1, 2].toListNode, 1)?.toArray ?? []
 
+// MARK: - 876. Middle of the Linked List [Easy]
+// https://leetcode.com/problems/middle-of-the-linked-list/
+// Given the head of a singly linked list, return the middle node of the linked list. If there are two middle nodes, return the second middle node.
+
+func middleNode(_ head: ListNode?) -> ListNode? {
+  var current = head
+  var count = 1
+
+  while current != nil {
+    count += 1
+    current = current!.next
+  }
+
+  let middle = (count % 2) == 0 ? count / 2 : count / 2 + 1
+  count = 0
+  current = head
+  while current != nil {
+    count += 1
+    if count == middle {
+      return current
+    }
+    current = current!.next
+  }
+
+  return current
+}
+
+middleNode([1, 2, 3, 4, 5].toListNode)?.toArray ?? []
+middleNode([1, 2, 3, 4, 5, 6].toListNode)?.toArray ?? []
+
 // MARK: - 2. Add Two Numbers [Medium]
 // https://leetcode.com/problems/add-two-numbers/
 // You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit.
