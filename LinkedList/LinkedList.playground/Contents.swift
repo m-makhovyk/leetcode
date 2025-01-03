@@ -287,3 +287,37 @@ func middleNode(_ head: ListNode?) -> ListNode? {
 
 middleNode([1, 2, 3, 4, 5].toListNode)?.toArray ?? []
 middleNode([1, 2, 3, 4, 5, 6].toListNode)?.toArray ?? []
+
+// MARK: - 1290. Convert Binary Number in a Linked List to Integer [Easy]
+// https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/
+// Given head which is a reference node to a singly-linked list. The value of each node in the linked list is either 0 or 1.
+// The linked list holds the binary representation of a number.
+// Return the decimal value of the number in the linked list.
+// The most significant bit is at the head of the linked list.
+
+func getDecimalValue(_ head: ListNode?) -> Int {
+  guard let head else { return 0 }
+
+  var current = head
+  var tail: ListNode? = ListNode(head.val)
+
+  // reversing the list
+  while let next = current.next {
+    let newNode = ListNode(next.val, tail)
+    tail = newNode
+    current = next
+  }
+
+  var value = 0
+  var powValue: Double = 0
+  while tail != nil {
+    value += tail!.val * Int(pow(Double(2), powValue))
+    powValue += 1
+    tail = tail!.next
+  }
+
+  return value
+}
+
+getDecimalValue([1, 0, 1].toListNode)
+getDecimalValue([0].toListNode)
