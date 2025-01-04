@@ -152,6 +152,68 @@ swapPairs([1, 2, 3].toListNode)?.toArray ?? []
 swapPairs([1].toListNode)?.toArray ?? []
 swapPairs([].toListNode)?.toArray ?? []
 
+// MARK: - 83. Remove Duplicates from Sorted List II [Medium]
+// https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+// Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+// Return the linked list sorted as well.
+
+func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+  guard var head else { return nil }
+
+  var previousNonDuplicate: ListNode?
+  var duplicateCount = 0
+
+  var current = head
+  while let next = current.next {
+    if current.val != next.val {
+
+      // if it's the first element in the list, save it as the previous non-duplicate
+      if previousNonDuplicate == nil && duplicateCount == 0 {
+        previousNonDuplicate = current
+      } else if duplicateCount != 0 {
+
+        // if we have leading duplicates, drop them
+        if previousNonDuplicate == nil {
+          head = next
+        } else {
+          previousNonDuplicate?.next = current.next
+        }
+
+      } else {
+        // meaning we have two consecutive non-duplicates
+        previousNonDuplicate = current
+      }
+
+      duplicateCount = 0
+    } else {
+      // if current and next values are equal, increment the duplicate count
+      duplicateCount += 1
+    }
+
+
+    current = next
+  }
+
+  // if all elements in list are duplicates, return nil
+  // if only one element in the list, return it
+  if previousNonDuplicate == nil {
+    return head.val == head.next?.val ? nil : head
+  }
+
+  // drop trailing duplicates
+  if duplicateCount != 0 {
+    previousNonDuplicate?.next = nil
+  }
+
+  return head
+}
+
+deleteDuplicates([1, 2, 3, 3, 4, 4, 5].toListNode)?.toArray ?? []
+deleteDuplicates([1, 1, 1, 2, 3].toListNode)?.toArray ?? []
+deleteDuplicates([1, 1].toListNode)?.toArray ?? []
+deleteDuplicates([1].toListNode)?.toArray ?? []
+deleteDuplicates([1, 2, 2].toListNode)?.toArray ?? []
+
 // MARK: - 83. Remove Duplicates from Sorted List [Easy]
 // https://leetcode.com/problems/remove-duplicates-from-sorted-list/
 // Given the head of a sorted linked list, delete all duplicates such that each element appears only once. Return the linked list sorted as well.
