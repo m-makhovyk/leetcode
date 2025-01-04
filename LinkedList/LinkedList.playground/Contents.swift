@@ -152,11 +152,12 @@ swapPairs([1, 2, 3].toListNode)?.toArray ?? []
 swapPairs([1].toListNode)?.toArray ?? []
 swapPairs([].toListNode)?.toArray ?? []
 
-// MARK: - 83. Remove Duplicates from Sorted List II [Medium]
+// MARK: - 82. Remove Duplicates from Sorted List II [Medium]
 // https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
 // Given the head of a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
 // Return the linked list sorted as well.
 
+// this solution should also (probably) work for unsorted list
 func deleteDuplicates(_ head: ListNode?) -> ListNode? {
   guard var head else { return nil }
 
@@ -213,6 +214,73 @@ deleteDuplicates([1, 1, 1, 2, 3].toListNode)?.toArray ?? []
 deleteDuplicates([1, 1].toListNode)?.toArray ?? []
 deleteDuplicates([1].toListNode)?.toArray ?? []
 deleteDuplicates([1, 2, 2].toListNode)?.toArray ?? []
+
+func deleteDuplicatesAlternative(_ head: ListNode?) -> ListNode? {
+  // mutable new head
+  var head = head
+  if head == nil { return nil }
+
+  // iterating through the list to identify duplicates and store them to a set
+  // start iterating from the second value (or nil)
+  var current = head!.next
+  var index = 0
+  var set = Set<Int>()
+  // keeping previous node for comparing
+  var trackedValue = head!.val
+  var trackedCount = 1
+
+  while current != nil {
+    if current!.val != trackedValue {
+      if trackedCount > 1 {
+        set.insert(trackedValue)
+        trackedCount = 1
+      } else {
+
+      }
+      trackedValue = current!.val
+    } else {
+      trackedCount += 1
+    }
+
+    index += 1
+    current = current!.next
+  }
+
+  // if trailing values are duplicates, add it as well
+  if trackedCount > 1 {
+    set.insert(trackedValue)
+  }
+
+  // iterating through the list to remove duplicates
+  current = head
+  index = 0
+  // keeping previous node for comparing
+  var previous: ListNode? = nil
+  while current != nil {
+    // if current value is a duplicate
+    if set.contains(current!.val) {
+      // if it's first value, drop it from the head
+      if previous == nil {
+        head = current!.next
+      } else {
+        // otherwise link previous non-duplicate to the next of current
+        previous?.next = current?.next
+      }
+    } else {
+      // else shift previous node pointer
+      previous = current
+    }
+    index += 1
+    current = current!.next
+  }
+  return head
+}
+
+deleteDuplicatesAlternative([1, 2, 3, 3, 4, 4, 5].toListNode)?.toArray ?? []
+deleteDuplicatesAlternative([1, 1, 1, 2, 3].toListNode)?.toArray ?? []
+deleteDuplicatesAlternative([1, 1].toListNode)?.toArray ?? []
+deleteDuplicatesAlternative([1].toListNode)?.toArray ?? []
+deleteDuplicatesAlternative([1, 2, 2].toListNode)?.toArray ?? []
 
 // MARK: - 83. Remove Duplicates from Sorted List [Easy]
 // https://leetcode.com/problems/remove-duplicates-from-sorted-list/
