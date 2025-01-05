@@ -314,6 +314,60 @@ func removeDuplicatesFromSortedList(_ head: ListNode?) -> ListNode? {
 removeDuplicatesFromSortedList([1, 1, 2].toListNode)?.toArray ?? []
 removeDuplicatesFromSortedList([1, 1, 2, 3, 3].toListNode)?.toArray ?? []
 
+// MARK: - 143. Reorder List [Medium]
+// https://leetcode.com/problems/reorder-list/
+// You are given the head of a singly linked-list. The list can be represented as:
+// L0 → L1 → … → Ln - 1 → Ln
+// Reorder the list to be on the following form:
+// L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+// You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+func reorderList(_ head: ListNode?) {
+  guard var head else { return }
+
+  // getting reversed list
+  var tail: ListNode? = ListNode(head.val)
+  var current: ListNode? = head
+  var count = 0
+  while let next = current?.next {
+    tail = ListNode(next.val, tail)
+    current = next
+    count += 1
+  }
+
+  // iterating through the half of the list
+  current = head
+  var index = 0
+  while index < count / 2 {
+    // construct new node with the tail value and link it to the next node
+    let newNode = ListNode(tail!.val, current?.next)
+    // swap the next node with the new one
+    current!.next = newNode
+
+    // usual increment for iteration
+    current = newNode.next
+    tail = tail!.next
+    index += 1
+  }
+
+  // dropping the leftovers
+  if count % 2 == 0 {
+    current?.next = nil
+  } else {
+    current?.next?.next = nil
+  }
+}
+
+let node1 = [1, 2, 3, 4, 5, 6, 7, 8].toListNode
+reorderList(node1)
+node1?.toArray ?? []
+let node2 = [1, 2, 3, 4, 5].toListNode
+reorderList(node2)
+node2?.toArray ?? []
+let node3 = [1, 2, 3, 4, 5, 6, 7].toListNode
+reorderList(node3)
+node3?.toArray ?? []
+
 // MARK: - 203. Remove Linked List Elements [Easy]
 // https://leetcode.com/problems/remove-linked-list-elements/
 // Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
